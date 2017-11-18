@@ -1,5 +1,5 @@
 
-# Ecological Monitoring Unit - EcoBot
+# Ecology Monitoring Unit - EcoBot
 
 ##Hardware 
 
