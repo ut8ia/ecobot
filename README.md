@@ -1,13 +1,13 @@
 
 # Ecology Monitoring Unit - EcoBot
 
-##Hardware 
+## Hardware 
 
 - Raspberry PI3+ model B or similar unit
 - DHT22 temperature  & humidity sensor
 - SDS011 dust micro parts and smog lazer sensor ( 2,5 & 10 micrometers )
 
-##Software
+## Software
 
 ### EcoTower - Server aggregator application
 
