@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ReadingsSearch */
+/* @var $model common\models\SettingsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="readings-search">
+<div class="settings-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -18,13 +18,13 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'type') ?>
+    <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'value') ?>
 
-    <?= $form->field($model, 'make') ?>
+    <?= $form->field($model, 'def') ?>
 
-    <?= $form->field($model, 'send') ?>
+    <?= $form->field($model, 'changed') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

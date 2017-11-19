@@ -3,16 +3,17 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Readings;
-use common\models\ReadingsSearch;
+use common\models\Parameters;
+use common\models\ParametersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
- * ReadingsController implements the CRUD actions for Readings model.
+ * ParametersController implements the CRUD actions for Parameters model.
  */
-class ReadingsController extends Controller
+class ParametersController extends Controller
 {
     /**
      * @inheritdoc
@@ -21,21 +22,34 @@ class ReadingsController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ]
         ];
     }
 
     /**
-     * Lists all Readings models.
+     * Lists all Parameters models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ReadingsSearch();
+        $searchModel = new ParametersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,29 +59,28 @@ class ReadingsController extends Controller
     }
 
     /**
-     * Displays a single Readings model.
-     * @param string $type
-     * @param string $make
+     * Displays a single Parameters model.
+     * @param string $id
      * @return mixed
      */
-    public function actionView($type, $make)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($type, $make),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Readings model.
+     * Creates a new Parameters model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Readings();
+        $model = new Parameters();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'type' => $model->type, 'make' => $model->make]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -76,18 +89,17 @@ class ReadingsController extends Controller
     }
 
     /**
-     * Updates an existing Readings model.
+     * Updates an existing Parameters model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $type
-     * @param string $make
+     * @param string $id
      * @return mixed
      */
-    public function actionUpdate($type, $make)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($type, $make);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'type' => $model->type, 'make' => $model->make]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -96,30 +108,28 @@ class ReadingsController extends Controller
     }
 
     /**
-     * Deletes an existing Readings model.
+     * Deletes an existing Parameters model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $type
-     * @param string $make
+     * @param string $id
      * @return mixed
      */
-    public function actionDelete($type, $make)
+    public function actionDelete($id)
     {
-        $this->findModel($type, $make)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Readings model based on its primary key value.
+     * Finds the Parameters model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $type
-     * @param string $make
-     * @return Readings the loaded model
+     * @param string $id
+     * @return Parameters the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($type, $make)
+    protected function findModel($id)
     {
-        if (($model = Readings::findOne(['type' => $type, 'make' => $make])) !== null) {
+        if (($model = Parameters::findOne($id)) !== null) {
             return $model;
         }
 

@@ -9,6 +9,7 @@
 /frontend/config/main-local.php
 /frontend/config/params-local.php
 
+
 # phpstorm project files
 .idea
 

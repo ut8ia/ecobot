@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => '<div class="mainLogo"></div><div class="sloganLogo">'.Yii::$app->name.'</div>',
+        'brandLabel' => '<div class="mainLogo"></div><div class="sloganLogo">' . Yii::$app->name . '</div>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,11 +37,17 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-//        ['label' => 'Readings', 'url' => ['/readings']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+
+        $menuItems = [
+            ['label' => 'Parameters', 'url' => ['/parameters']],
+            ['label' => 'Reports', 'url' => ['/reports']],
+            ['label' => 'Settings', 'url' => ['/settings']],
+        ];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

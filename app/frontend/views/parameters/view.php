@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Readings */
+/* @var $model common\models\Parameters */
 
-$this->title = $model->type;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Readings'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Parameters'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="readings-view">
+<div class="parameters-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'type' => $model->type, 'make' => $model->make], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'type' => $model->type, 'make' => $model->make], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'id',
             'type',
             'value',
-            'make',
-            'send',
+            'report_id',
         ],
     ]) ?>
 
