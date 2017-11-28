@@ -4,48 +4,6 @@
 
 $this->title = 'EсoBot';
 use dosamigos\chartjs\ChartJs;
-use common\models\Readings;
-
-$data = Readings::find()
-    ->limit(196)
-    ->orderBy(['make' => SORT_DESC])
-    ->where(['type' => [Readings::TYPE_HUMIDITY, Readings::TYPE_TEMPERATURE]])
-    ->all();
-
-$labels = [];
-$temp = [];
-$hum = [];
-$labelstemp = [];
-$labelshum = [];
-
-foreach ($data as $item) {
-
-    if ($item->type === Readings::TYPE_TEMPERATURE) {
-        $temp[] = $item->value / 10;
-        $labelstemp[] = $item->make;
-    }
-    if ($item->type === Readings::TYPE_HUMIDITY) {
-        $hum[] = $item->value / 10;
-        $labelshum[] = $item->make;
-    }
-}
-
-$dust = Readings::find()
-    ->limit(97)
-    ->orderBy(['make' => SORT_DESC])
-    ->where(['type' => Readings::TYPE_DUST])
-    ->all();
-
-$dustLabels = [];
-$d10 = [];
-$d25 = [];
-foreach ($dust as $item) {
-    $dust = json_decode($item->value);
-    $d10[] = $dust[0];
-    $d25[] = $dust[1];
-    $dustLabels[] = $item->make;
-}
-
 
 ?>
 <div class="site-index">
@@ -63,7 +21,7 @@ foreach ($dust as $item) {
                 'width' => 400
             ],
             'data' => [
-                'labels' => $dustLabels,
+                'labels' => $labels,
                 'datasets' => [
                     [
                         'label' => "2,5 мкм",
@@ -73,7 +31,7 @@ foreach ($dust as $item) {
                         'pointBorderColor' => "#fff",
                         'pointHoverBackgroundColor' => "#fff",
                         'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                        'data' => $d25
+                        'data' => $dust25
                     ],
                     [
                         'label' => "10 мкм",
@@ -83,7 +41,7 @@ foreach ($dust as $item) {
                         'pointBorderColor' => "#fff",
                         'pointHoverBackgroundColor' => "#fff",
                         'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                        'data' => $d10
+                        'data' => $dust10
                     ]
                 ]
             ]
@@ -100,7 +58,7 @@ foreach ($dust as $item) {
                 'width' => 400
             ],
             'data' => [
-                'labels' => $labelstemp,
+                'labels' => $labels,
                 'datasets' => [
                     [
                         'label' => "Температура повітря",
@@ -110,7 +68,7 @@ foreach ($dust as $item) {
                         'pointBorderColor' => "#fff",
                         'pointHoverBackgroundColor' => "#fff",
                         'pointHoverBorderColor' => "rgba(159,200,240,1)",
-                        'data' => $temp
+                        'data' => $temperature
                     ],
                 ]
             ]
@@ -126,7 +84,7 @@ foreach ($dust as $item) {
                 'width' => 400
             ],
             'data' => [
-                'labels' => $labelshum,
+                'labels' => $labels,
                 'datasets' => [
                     [
                         'label' => "Вологість повітря",
@@ -136,7 +94,7 @@ foreach ($dust as $item) {
                         'pointBorderColor' => "#fff",
                         'pointHoverBackgroundColor' => "#fff",
                         'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                        'data' => $hum
+                        'data' => $humidity
                     ]
                 ]
             ]

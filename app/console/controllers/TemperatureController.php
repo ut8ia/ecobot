@@ -3,15 +3,15 @@
 namespace console\controllers;
 
 use Yii;
+use common\models\Parameters;
 use yii\console\Controller;
 use common\models\CertificatesOrders;
-use common\models\Readings;
 
 /**
- * Manage certificate order
+ * Class TemperatureController
  * @package console\controllers
  */
-class TempController extends Controller
+class TemperatureController extends Controller
 {
 
     public function actionRead()
@@ -33,11 +33,11 @@ class TempController extends Controller
             }
             $n--;
         }
-        $tempereture = round((($temp / $c) * $mult), 0);
+        $temperature = round((($temp / $c) * $mult), 0);
         $humidity = round((($hum / $c) * $mult), 0);
 
-        Readings::add(Readings::TYPE_TEMPERATURE, $tempereture);
-        Readings::add(Readings::TYPE_HUMIDITY, $humidity);
+        Parameters::addRecord(Parameters::TYPE_TEMPERATURE, $temperature);
+        Parameters::addRecord(Parameters::TYPE_HUMIDITY, $humidity);
     }
 
 }

@@ -14,6 +14,13 @@ use Yii;
  */
 class Parameters extends \yii\db\ActiveRecord
 {
+
+    const TYPE_TEMPERATURE = 'temperature';
+    const TYPE_HUMIDITY = 'humidity';
+    const TYPE_DUST10 = 'dust10';
+    const TYPE_DUST25 = 'dust25';
+    const TYPE_GAS = 'gas';
+
     /**
      * @inheritdoc
      */
@@ -46,4 +53,30 @@ class Parameters extends \yii\db\ActiveRecord
             'report_id' => Yii::t('app', 'Report ID'),
         ];
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReport()
+    {
+        return $this->hasOne(Reports::class, ['id' => 'report_id']);
+    }
+
+
+    /**
+     * @param $type
+     * @param $value
+     * @return bool
+     */
+    public static function addRecord($type, $value)
+    {
+        $param = new Parameters();
+        $param->type = $type;
+        $param->value = $value;
+        $param->report_id = Reports::findLastId();
+        return $param->save();
+    }
+
+
 }

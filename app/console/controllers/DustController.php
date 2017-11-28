@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\Parameters;
 use Yii;
 use yii\console\Controller;
 use common\models\CertificatesOrders;
@@ -16,15 +17,14 @@ class DustController extends Controller
 
     public function actionRead()
     {
-        $cycle = 50; // average factor for sensor measurement
-        $badReadingMax = 30;
+        $cycle = 40; // average factor for sensor measurement
         $d10 = 0;
         $d25 = 0;
+
         $n = $cycle;
         $c = 0; // count of success readings
         $trueFactorMax = 1.3;
         $trueFactorMin = 0.7;
-        $badCount = 0;
 
         while ($n) {
             $data = shell_exec('sudo /home/pi/ecobot/app/console/commands/dust.sh');
@@ -52,27 +52,17 @@ class DustController extends Controller
                     $d10 += $params[0];
                     $d25 += $params[1];
                     $c++;
-                } else {
-                    $badCount++;
-                    // too much bad values - restart cycle
-//                    if ($badCount === $badReadingMax) {
-//                        $c = 0;
-//                        $badCount = 0;
-//                        $d10 = 0;
-//                        $d25 = 0;
-//                        $n = $cycle;
-//                    }
                 }
             }
             $n--;
-            sleep(5);
+            sleep(4);
         }
 
         $dust10 = round(($d10 / $c), 0);
         $dust25 = round(($d25 / $c), 0);
 
-        Readings::add(Readings::TYPE_DUST, json_encode([$dust10, $dust25]));
-
+        Parameters::addRecord(Parameters::TYPE_DUST10, $dust10);
+        Parameters::addRecord(Parameters::TYPE_DUST25, $dust25);
     }
 
 }

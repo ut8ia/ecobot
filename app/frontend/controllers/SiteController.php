@@ -1,6 +1,8 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\helpers\ReportBuilder;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -72,7 +74,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $report = new ReportBuilder();
+        $report->makeReport();
+
+        return $this->render('index',
+            [
+                'labels' => $report->getLabels(),
+                'temperature' => $report->getTemperature(),
+                'humidity' => $report->getHumidity(),
+                'dust25' => $report->getDust25(),
+                'dust10' => $report->getDust10(),
+                'gas' => $report->getGas()
+            ]
+        );
     }
 
     /**
@@ -89,11 +103,12 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -124,11 +139,12 @@ class SiteController extends Controller
             }
 
             return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -175,9 +191,10 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
 
                 return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
             }
+
+            Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+
         }
 
         return $this->render('requestPasswordResetToken', [
