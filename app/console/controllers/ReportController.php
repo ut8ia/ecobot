@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\services\sender\Sender;
 use Yii;
 use yii\console\Controller;
 use common\models\CertificatesOrders;
@@ -26,8 +27,27 @@ class ReportController extends Controller
     /**
      * @return null
      */
-    public function actionSend(){
-        return null;
+    public function actionSend()
+    {
+
+        $reports = Reports::find()
+            ->where(['sent' => null])
+            ->all();
+
+        $c = 0;
+        if (empty($reports)) {
+            return $c;
+        }
+
+        $sender = new Sender();
+        foreach ($reports as $report) {
+            if ($sender->send($report->id)) {
+                $c++;
+                $report->sent = time();
+                $report->save();
+            }
+        }
+        return $c;
     }
 
 }

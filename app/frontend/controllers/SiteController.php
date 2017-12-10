@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\CommonHelper;
 use common\helpers\ReportBuilder;
 use Yii;
 use yii\base\InvalidParamException;
@@ -71,17 +72,19 @@ class SiteController extends Controller
      * Displays homepage.
      *
      * @return mixed
+     * @throws InvalidParamException
      */
     public function actionIndex()
     {
         $report = new ReportBuilder();
+        $report->limit = 1100;
         $report->makeReport();
 
         return $this->render('index',
             [
                 'labels' => $report->getLabels(),
-                'temperature' => $report->getTemperature(),
-                'humidity' => $report->getHumidity(),
+                'temperature' => CommonHelper::arrayMult($report->getTemperature(),0.1),
+                'humidity' => CommonHelper::arrayMult($report->getHumidity(),0.1),
                 'dust25' => $report->getDust25(),
                 'dust10' => $report->getDust10(),
                 'gas' => $report->getGas()

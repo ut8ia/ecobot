@@ -1,7 +1,7 @@
 sudo apt-get update
 sudo apt-get install nginx
 sudo apt-get install php7.0
-sudo apt-get install php7.0-mysqli php7.0-mbstring php7.0-dom php7.0-gd
+sudo apt-get install php7.0-mysqli php7.0-mbstring php7.0-dom php7.0-gd php-curl
 sudo apt-get install mysql-server
 sudo mysql_secure_installation
 

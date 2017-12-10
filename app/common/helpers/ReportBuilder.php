@@ -2,10 +2,8 @@
 
 namespace common\helpers;
 
-
 use common\models\Parameters;
 use common\models\Reports;
-use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -16,7 +14,7 @@ class ReportBuilder extends BaseObject
 {
 
     /** @var int $limit */
-    public $limit = 62;
+    public $limit = 96;
 
     private $labels = [];
     private $temperature = [];
@@ -98,13 +96,12 @@ class ReportBuilder extends BaseObject
      */
     private function processParams(Reports $report)
     {
-
         $types = self::PARAM_TYPES;
         if (null !== $report->parameters) {
             /** @var $parameter Parameters */
             foreach ($report->parameters as $parameter) {
                 $this->{$parameter->type}[] = $parameter->value;
-                unset($types[$parameter->type]);
+                unset($types[array_search($parameter->type, $types, false)]);
             }
         }
 
