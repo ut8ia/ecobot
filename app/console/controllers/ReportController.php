@@ -9,7 +9,6 @@ use common\models\CertificatesOrders;
 use common\models\Reports;
 
 /**
- * Manage certificate order
  * @package console\controllers
  */
 class ReportController extends Controller

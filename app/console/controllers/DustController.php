@@ -9,7 +9,6 @@ use common\models\CertificatesOrders;
 use common\models\Readings;
 
 /**
- * Manage certificate order
  * @package console\controllers
  */
 class DustController extends Controller
@@ -17,7 +16,8 @@ class DustController extends Controller
 
     public function actionRead()
     {
-        $cycle = 40; // average factor for sensor measurement
+        $maxValue = 500;
+        $cycle = 30; // average factor for sensor measurement
         $d10 = 0;
         $d25 = 0;
 
@@ -32,6 +32,12 @@ class DustController extends Controller
 
             // possible bad data
             if (is_array($params) && isset($params[1])) {
+
+                // skip on bad values ( more than max )
+                if($params[0]>$maxValue || $params[1]>$maxValue){
+                    continue;
+                }
+
 
                 // trust in first measurement
                 if (!$c) {
@@ -55,7 +61,7 @@ class DustController extends Controller
                 }
             }
             $n--;
-            sleep(4);
+            sleep(6);
         }
 
         $dust10 = round(($d10 / $c), 0);

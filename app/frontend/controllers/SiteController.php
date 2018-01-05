@@ -77,7 +77,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $report = new ReportBuilder();
-        $report->limit = 1100;
+        $report->limit = 96;
         $report->makeReport();
 
         return $this->render('index',
