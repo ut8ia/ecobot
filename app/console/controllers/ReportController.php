@@ -29,6 +29,9 @@ class ReportController extends Controller
     public function actionSend()
     {
 
+        //randomize report burst ( reduce peak loading on aggregation server )
+        sleep(mt_rand(1,30));
+
         $reports = Reports::find()
             ->where(['sent' => null])
             ->all();
@@ -42,7 +45,7 @@ class ReportController extends Controller
         foreach ($reports as $report) {
             if ($sender->send($report->id)) {
                 $c++;
-                $report->sent = time();
+                $report->sent = date("Y-m-d H:i:s", time());
                 $report->save();
             }
         }
