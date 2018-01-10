@@ -19,7 +19,7 @@ class Sender extends BaseObject
     public function init()
     {
         $this->host = Yii::$app->params['apihost'];
-        $this->key =  Yii::$app->params['apikey'];
+        $this->key = Yii::$app->params['apikey'];
     }
 
     public function send($reportId)
@@ -61,6 +61,10 @@ class Sender extends BaseObject
         try {
             $response = curl_exec($ch);
         } catch (\Exception $e) {
+            return false;
+        }
+
+        if (false === $response) {
             return false;
         }
 

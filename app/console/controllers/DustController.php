@@ -14,14 +14,16 @@ use common\models\Readings;
 class DustController extends Controller
 {
 
-    public function actionRead()
+
+    private $cycle = 25; // average factor for sensor measurement
+
+    private function readDust()
     {
-        $maxValue = 500;
-        $cycle = 30; // average factor for sensor measurement
+        $maxValue = 350;
         $d10 = 0;
         $d25 = 0;
 
-        $n = $cycle;
+        $n = $this->cycle;
         $c = 0; // count of success readings
         $trueFactorMax = 1.3;
         $trueFactorMin = 0.7;
@@ -34,10 +36,10 @@ class DustController extends Controller
             if (is_array($params) && isset($params[1])) {
 
                 // skip on bad values ( more than max )
-                if($params[0]>$maxValue || $params[1]>$maxValue){
+                if ($params[0] > $maxValue || $params[1] > $maxValue) {
+                    $n++;
                     continue;
                 }
-
 
                 // trust in first measurement
                 if (!$c) {
@@ -71,4 +73,18 @@ class DustController extends Controller
         Parameters::addRecord(Parameters::TYPE_DUST25, $dust25);
     }
 
+    public function actionRead()
+    {
+        $this->readDust();
+    }
+
+    public function actionReadShort()
+    {
+        if (Parameters::checkParameter(Parameters::TYPE_DUST25)) {
+            return false;
+        }
+        Yii::error('second dust reading','DUST');
+        $this->cycle = 12;
+        $this->readDust();
+    }
 }

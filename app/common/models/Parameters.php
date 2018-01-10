@@ -79,4 +79,18 @@ class Parameters extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * @param string $parameterType
+     * @return bool
+     */
+    public static function checkParameter($parameterType)
+    {
+        $parameter = Parameters::find()
+            ->where(['report_id' => Reports::findLastId()])
+            ->andWhere(['type' => $parameterType])
+            ->one();
+
+        return (null !== $parameter);
+    }
+
 }

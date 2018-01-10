@@ -14,13 +14,13 @@ use common\models\Reports;
 class CheckController extends Controller
 {
 
+    /**
+     *  reboot if no parameter in latest report
+     */
     public function actionDust()
     {
-        $dust25 = Parameters::find()
-            ->where(['report_id' => Reports::findLastId()])
-            ->andWhere(['type' => Parameters::TYPE_DUST25])
-            ->one();
-        if (null === $dust25) {
+        if (!Parameters::checkParameter(Parameters::TYPE_DUST25)) {
+            Yii::error('reboot command due dust densor failures','DUST');
             shell_exec('sudo shutdown -r now');
         }
     }
