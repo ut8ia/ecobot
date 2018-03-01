@@ -14,10 +14,11 @@ use common\models\CertificatesOrders;
 class TemperatureController extends Controller
 {
 
+
     public function actionRead()
     {
         $mult = 10;
-        $cycle = 70; // average factor for sensor measurement
+        $cycle = 30; // average factor for sensor measurement
         $temp = 0;
         $hum = 0;
         $n = $cycle;
@@ -26,7 +27,7 @@ class TemperatureController extends Controller
             $data = shell_exec('sudo /usr/bin/python /home/pi/Adafruit_Python_DHT/examples/temp.py 2302 22');
             $params = explode(';', $data);
             // all params read and second parm exist
-            if (is_array($params) and isset($params[1]) and $params[1] < 99 and $params[0] < 40) {
+            if (is_array($params) and isset($params[1]) and $params[1] < 100 and $params[0] < 40 and $params[0] > -15) {
                 $temp += $params[0];
                 $hum += $params[1];
                 $c++;

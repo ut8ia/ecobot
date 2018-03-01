@@ -1,7 +1,19 @@
+# download NOOBS Lite (Network install raspberian to device)
+# https://www.raspberrypi.org/downloads/noobs/
+# unpack files from NOOBS archive to SD card on your PC
+# insert SD card in to raspberry pi, connect monitor, mouse, keyboard and start it
+# Select rapberian OS from list - noobs will download and install it to SD card
+# after installing and rebooting you log in to newly installed Raspberian OS
+# default user:pi password:raspberry
+# sudo passwd  # change default password, highly recomended
+# sudo raspi-config # enable remote ssh , vnc
+
+
+
 sudo apt-get update
 sudo apt-get install nginx
 sudo apt-get install php7.0
-sudo apt-get install php7.0-mysqli php7.0-mbstring php7.0-dom php7.0-gd php-curl
+sudo apt-get install php7.0-mysqli php7.0-fpm php7.0-mbstring php7.0-dom php7.0-gd php-curl
 sudo apt-get install mysql-server
 sudo mysql_secure_installation
 
