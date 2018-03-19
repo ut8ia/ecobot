@@ -15,11 +15,17 @@ class DustController extends Controller
 {
 
 
-    private $cycle = 25; // average factor for sensor measurement
+    private $cycle = 15; // average factor for sensor measurement
+    private $maxValue = 250; // max valid value
 
     private function readDust()
     {
-        $maxValue = 350;
+
+        // enable power on dust sensor thru mosfet on pin 23
+        shell_exec('echo "1" > /sys/class/gpio/gpio23/value');
+        // wait for cooler reach proper rpm
+        sleep(10);
+
         $d10 = 0;
         $d25 = 0;
 
@@ -36,7 +42,7 @@ class DustController extends Controller
             if (is_array($params) && isset($params[1])) {
 
                 // skip on bad values ( more than max )
-                if ($params[0] > $maxValue || $params[1] > $maxValue) {
+                if ($params[0] > $this->maxValue || $params[1] > $this->maxValue) {
                     $n++;
                     continue;
                 }
@@ -71,6 +77,10 @@ class DustController extends Controller
 
         Parameters::addRecord(Parameters::TYPE_DUST10, $dust10);
         Parameters::addRecord(Parameters::TYPE_DUST25, $dust25);
+
+        // disable power on dust sensor thru mosfet on pin 23
+        shell_exec('echo "0" > /sys/class/gpio/gpio23/value');
+
     }
 
     public function actionRead()
@@ -78,13 +88,19 @@ class DustController extends Controller
         $this->readDust();
     }
 
+
+    /**
+     * second read probe - if first is bad
+     * shortly and maximum range up to 550ppm
+     */
     public function actionReadShort()
     {
         if (Parameters::checkParameter(Parameters::TYPE_DUST25)) {
             return false;
         }
-        Yii::error('second dust reading','DUST');
-        $this->cycle = 12;
+        Yii::error('second dust reading', 'DUST');
+        $this->cycle = 8;
+        $this->maxValue = 550;
         $this->readDust();
     }
 }

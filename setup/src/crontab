@@ -1,0 +1,25 @@
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user	command
+17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
+25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+
+0,15,30,45 *	* * *	pi	/usr/bin/php /home/pi/ecobot/app/yii report/create
+1,16,31,46 *	* * *	pi	/usr/bin/php /home/pi/ecobot/app/yii temperature/read
+1,16,31,46 *	* * *   pi      /usr/bin/php /home/pi/ecobot/app/yii dust/read
+14,29,44,59 *    * * *   pi      /usr/bin/php /home/pi/ecobot/app/yii report/send
+6,21,36,51 *	* * *	pi	/usr/bin/php /home/pi/ecobot/app/yii check/dust
+8,23,38,53 *    * * *   pi      /usr/bin/php /home/pi/ecobot/app/yii dust/read-short
+12,27,42,57 *   * * *   pi      /usr/bin/php /home/pi/ecobot/app/yii check/dust
+
+
+#
