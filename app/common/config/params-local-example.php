@@ -5,7 +5,7 @@ return [
     'hashkey' => 'dfbgsdbbbbmgkmdflkbdflbn',
     'tempCorrection' => 0,
     'humidityCorrection' => 0,
-    'dust10Correction' => 0,
-    'dust25Correction' => 0,
+    'dust10Correction' => 1,
+    'dust25Correction' => 1,
 ];
 
