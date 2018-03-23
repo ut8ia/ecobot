@@ -18,11 +18,12 @@ class TemperatureController extends Controller
     public function actionRead()
     {
         $mult = 10;
-        $cycle = 30; // average factor for sensor measurement
         $temp = 0;
         $hum = 0;
-        $n = $cycle;
+        $n = 15;
         $c = 0; // count of success readings
+
+        // to prevent single mistakes - measure between -15 ... +40 C
         while ($n) {
             $data = shell_exec('sudo /usr/bin/python /home/pi/Adafruit_Python_DHT/examples/temp.py 2302 22');
             $params = explode(';', $data);
@@ -34,8 +35,26 @@ class TemperatureController extends Controller
             }
             $n--;
         }
-        $temperature = round((($temp / $c) * $mult), 0);
-        $humidity = round((($hum / $c) * $mult), 0);
+
+        // if no success readings - try more wide band -29 .... +60 C
+        if (!$c) {
+            $n = 15;
+            while ($n) {
+                $data = shell_exec('sudo /usr/bin/python /home/pi/Adafruit_Python_DHT/examples/temp.py 2302 22');
+                $params = explode(';', $data);
+                // all params read and second parm exist
+                if (is_array($params) and isset($params[1]) and $params[1] < 100 and $params[0] < 60 and $params[0] > -29) {
+                    $temp += $params[0];
+                    $hum += $params[1];
+                    $c++;
+                }
+                $n--;
+            }
+
+        }
+
+        $temperature = round((($temp / $c) * $mult), 0) + Yii::$app->params['tempCorrection'];
+        $humidity = round((($hum / $c) * $mult), 0) + Yii::$app->params['humidityCorrection'];
 
         Parameters::addRecord(Parameters::TYPE_TEMPERATURE, $temperature);
         Parameters::addRecord(Parameters::TYPE_HUMIDITY, $humidity);
