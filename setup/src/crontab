@@ -20,6 +20,5 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 6,21,36,51 *	* * *	pi	/usr/bin/php /home/pi/ecobot/app/yii check/dust
 8,23,38,53 *    * * *   pi      /usr/bin/php /home/pi/ecobot/app/yii dust/read-short
 12,27,42,57 *   * * *   pi      /usr/bin/php /home/pi/ecobot/app/yii check/dust
+0 9     * * *   pi      cd ~/ecobot ; git pull origin master
 
-
-#
