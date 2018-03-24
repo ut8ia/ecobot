@@ -24,7 +24,7 @@ class DustController extends Controller
         // enable power on dust sensor thru mosfet on pin 23
         shell_exec('echo "1" > /sys/class/gpio/gpio23/value');
         // wait for cooler reach proper rpm
-        sleep(10);
+        sleep(15);
 
         $d10 = 0;
         $d25 = 0;
