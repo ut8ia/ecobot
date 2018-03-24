@@ -15,7 +15,7 @@ class DustController extends Controller
 {
 
 
-    private $cycle = 15; // average factor for sensor measurement
+    private $cycle = 25; // average factor for sensor measurement
     private $maxValue = 250; // max valid value
 
     private function readDust()
@@ -99,7 +99,7 @@ class DustController extends Controller
             return false;
         }
         Yii::error('second dust reading', 'DUST');
-        $this->cycle = 8;
+        $this->cycle = 15;
         $this->maxValue = 550;
         $this->readDust();
     }
