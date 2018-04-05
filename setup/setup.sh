@@ -2,7 +2,7 @@
 # https://www.raspberrypi.org/downloads/noobs/
 # unpack files from NOOBS archive to SD card on your PC
 # insert SD card in to raspberry pi, connect monitor, mouse, keyboard and start it
-# Select rapberian OS from list - noobs will download and install it to SD card
+# Select raspberian OS from list - noobs will download and install it to SD card
 # after installing and rebooting you log in to newly installed Raspberian OS
 # default user:pi password:raspberry
 # sudo passwd  # change default password, highly recomended
