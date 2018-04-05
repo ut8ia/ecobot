@@ -100,7 +100,7 @@ class DustController extends Controller
         }
         Yii::error('second dust reading', 'DUST');
         $this->cycle = 15;
-        $this->maxValue = 550;
+        $this->maxValue = 750;
         $this->readDust();
     }
 }
