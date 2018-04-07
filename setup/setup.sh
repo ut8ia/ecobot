@@ -10,7 +10,7 @@
 
 
 # copy and setup gpio bootstrap script
-cp ~/ecobot/setup/src/gpio_start.sh /etc/init.d/
+sudo cp ~/ecobot/setup/src/gpio_start.sh /etc/init.d/
 update-rc.d gpio_start.sh defaults
 
 # install required packages

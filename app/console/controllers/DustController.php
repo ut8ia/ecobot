@@ -31,8 +31,8 @@ class DustController extends Controller
 
         $n = $this->cycle;
         $c = 0; // count of success readings
-        $trueFactorMax = 1.3;
-        $trueFactorMin = 0.7;
+        $trueFactorMax = 1.55;
+        $trueFactorMin = 0.45;
 
         while ($n) {
             $data = shell_exec('sudo /home/pi/ecobot/app/console/commands/dust.sh');
@@ -55,7 +55,10 @@ class DustController extends Controller
                     continue;
                 }
 
-                // possible wrong data from sensor far from avarage values
+                $params[0] = $params[0] == 0 ? 1 : $params[0];
+                $params[1] = $params[1] == 0 ? 1 : $params[1];
+
+                // possible wrong data from sensor far from average values
                 $av10 = (($d10 / $c) / $params[0]); // factor dust 10um
                 $av25 = (($d25 / $c) / $params[1]); // factor dust 2,5um
 
