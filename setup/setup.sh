@@ -7,15 +7,17 @@
 # default user:pi password:raspberry
 # sudo passwd  # change default password, highly recomended
 # sudo raspi-config # enable remote ssh , vnc
+#
+# clone this application
+#
+# cd ~
+# git clone https://github.com/ut8ia/ecobot.git
+#
 
-
-# copy and setup gpio bootstrap script
-sudo cp ~/ecobot/setup/src/gpio_start.sh /etc/init.d/
-update-rc.d gpio_start.sh defaults
 
 # install required packages
 sudo apt-get update
-sudo apt-get install git nginx php7.0 php7.0-mysqli php7.0-fpm php7.0-mbstring php7.0-dom php7.0-gd php-curl mysql-server
+sudo apt-get install git nginx php7.0 php7.0-mysqli php7.0-fpm php7.0-mbstring php7.0-dom php7.0-gd php7.0-intl php-curl mysql-server bc
 sudo mysql_secure_installation
 
 # change auth plugin on maria db : $ sudo mysql -u root -p
@@ -30,16 +32,23 @@ git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 cd Adafruit_Python_DHT
 sudo python setup.py install
 
+
+
+# copy and setup gpio bootstrap script
+sudo cp ~/ecobot/setup/src/gpio_start.sh /etc/init.d/
+update-rc.d gpio_start.sh defaults
+
+
 # copy python scripts for DHT 22
-cp ~/ecpbot/app/setup/humidity.py ~/Adafruit_Python_DHT/examples/
-cp ~/ecpbot/app/setup/temp.py ~/Adafruit_Python_DHT/examples/
+cp ~/ecobot/setup/src/humidity.py ~/Adafruit_Python_DHT/examples/
+cp ~/ecobot/setup/src/temp.py ~/Adafruit_Python_DHT/examples/
 
-
-#SDS011 dust sensor
-sudo apt-get install bc
 
 # install php yii2 application
 php -r "readfile('https://getcomposer.org/installer');" | php
 sudo mv composer.phar /usr/local/bin/composer
-cd ~/ekobot/app
+cd ~/ecobot/app
 composer install
+
+sudo cp ~/ecobot/setup/src/default /etc/nginx/sites-available/
+systemctl restart nginx

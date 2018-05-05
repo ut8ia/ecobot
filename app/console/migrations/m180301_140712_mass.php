@@ -12,7 +12,7 @@ class m180301_140712_mass extends Migration
             [
                 'id' => Schema::TYPE_PK . '',
                 'started' => Schema::TYPE_TIMESTAMP . ' NOT NULL DEFAULT CURRENT_TIMESTAMP',
-                'sent' => Schema::TYPE_TIMESTAMP . '',
+                'sent' => Schema::TYPE_TIMESTAMP . ' NULL',
             ], $tableOptions);
 
     }
