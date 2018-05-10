@@ -77,7 +77,9 @@ AppAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"></p>
+        <p class="pull-right">
+            Powered by<a href="https://www.ecolook.org">EcoLook.org - Online ecology monitoring service</a>
+        </p>
     </div>
 </footer>
 

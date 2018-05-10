@@ -36,7 +36,7 @@ sudo python setup.py install
 
 # copy and setup gpio bootstrap script
 sudo cp ~/ecobot/setup/src/gpio_start.sh /etc/init.d/
-update-rc.d gpio_start.sh defaults
+sudo update-rc.d gpio_start.sh defaults
 
 
 # copy python scripts for DHT 22
