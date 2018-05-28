@@ -75,8 +75,8 @@ class DustController extends Controller
                 sleep(6);
             }
 
-            $dust10 = round(($d10 / $c), 0) * Yii::$app->params['dust10Correction'];
-            $dust25 = round(($d25 / $c), 0) * Yii::$app->params['dust25Correction'];
+            $dust10 = round(($d10 / $c) * Yii::$app->params['dust10Correction'],0);
+            $dust25 = round(($d25 / $c) * Yii::$app->params['dust25Correction'],0);
 
             Parameters::addRecord(Parameters::TYPE_DUST10, $dust10);
             Parameters::addRecord(Parameters::TYPE_DUST25, $dust25);
