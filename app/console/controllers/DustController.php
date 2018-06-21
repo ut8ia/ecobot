@@ -32,8 +32,8 @@ class DustController extends Controller
 
             $n = $this->cycle;
             $c = 0; // count of success readings
-            $trueFactorMax = 3.0;
-            $trueFactorMin = 0.5;
+            $trueFactorMax = 1.4;
+            $trueFactorMin = 0.6;
 
             while ($n) {
                 $data = shell_exec('sudo /home/pi/ecobot/app/console/commands/dust.sh');
@@ -95,7 +95,7 @@ class DustController extends Controller
 
     /**
      * second read probe - if first is bad
-     * shortly and maximum range up to 550ppm
+     * shortly and maximum range up to 1000ppm
      */
     public function actionReadShort()
     {
