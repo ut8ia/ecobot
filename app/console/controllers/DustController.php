@@ -14,7 +14,7 @@ use common\models\Readings;
 class DustController extends Controller
 {
 
-    private $cycle = 18; // average factor for sensor measurement
+    private $cycle = 12; // average factor for sensor measurement
     private $maxValue10 = 400; // max valid value
     private $maxValue25 = 120; // max valid value
     private $timeout = 5; // seconds between measurements
