@@ -1,6 +1,10 @@
 
 # Ecology Monitoring Unit - EcoBot
 
+- Must have and easy to set-up
+- Total cost less than 100$
+- Ready for aggregator service [https://ecolook.org](https://ecolook.org)
+
 ## Hardware 
 
 - Raspberry PI3+ model B or similar unit
@@ -9,10 +13,6 @@
 
 ## Software
 
-### EcoTower - Server aggregator application
-
-It is separate project with their own repo
- 
 ### EcoBot - ecology monitoring unit ( current repo )
 
 - Host OS ( Raspbian as usually out-of-box on Rapsberry PI)
@@ -21,7 +21,7 @@ It is separate project with their own repo
 - MySQL as a storage engine
 - php Yii2 based application
 
-#### Structure of php Yii2 application
+#### Structure of php application
 
 ```
 common
