@@ -7,19 +7,18 @@ use Yii;
 use yii\base\Model;
 
 /**
- * Class  ResponseDataModel
+ * Class RequestDataModel
  * @package common\services\sender\models\data
  *
  * @property integer $mktime
- * @property boolean $success
- * @property array $command
+ * @property array $report
+ * @property array $parameters
  */
-class ResponseDataModel extends Model
+class RequestReportData extends Model
 {
 
     public $mktime;
-    public $success = false;
-    public $command = [];
+    public $report;
 
 
     /**
@@ -28,8 +27,7 @@ class ResponseDataModel extends Model
     public function rules()
     {
         return [
-            [['mktime', 'success'], 'required'],
-            ['command', 'safe']
+            [['mktime', 'report'], 'required'],
         ];
     }
 

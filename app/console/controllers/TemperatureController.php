@@ -5,7 +5,6 @@ namespace console\controllers;
 use Yii;
 use common\models\Parameters;
 use yii\console\Controller;
-use common\models\CertificatesOrders;
 
 /**
  * Class TemperatureController

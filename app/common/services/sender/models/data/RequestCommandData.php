@@ -3,22 +3,22 @@
 namespace common\services\sender\models\data;
 
 use common\models\Reports;
+use common\services\commander\models\Command;
 use Yii;
 use yii\base\Model;
 
 /**
- * Class RequestDataModel
+ * Class RequestCommandData
  * @package common\services\sender\models\data
  *
  * @property integer $mktime
- * @property array $report
- * @property array $parameters
+ * @property array $command
  */
-class RequestDataModel extends Model
+class RequestCommandData extends Model
 {
 
     public $mktime;
-    public $report;
+    public $command;
 
 
     /**
@@ -27,21 +27,17 @@ class RequestDataModel extends Model
     public function rules()
     {
         return [
-            [['mktime', 'report'], 'required'],
+            [['mktime', 'command'], 'required'],
         ];
     }
 
     /**
-     * @param $reportId
+     * @param Command $command
      */
-    public function prepare($reportId)
+    public function prepare($command)
     {
         $this->mktime = time();
-        $this->report = Reports::find()
-            ->where(['id' => $reportId])
-            ->with('parameters')
-            ->asArray()
-            ->one();
+        $this->command = $command->attributes;
     }
 
     /**

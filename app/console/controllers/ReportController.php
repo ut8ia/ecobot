@@ -5,7 +5,6 @@ namespace console\controllers;
 use common\services\sender\Sender;
 use Yii;
 use yii\console\Controller;
-use common\models\CertificatesOrders;
 use common\models\Reports;
 
 /**
@@ -19,6 +18,8 @@ class ReportController extends Controller
      */
     public function actionCreate()
     {
+        shell_exec('~/ecobot/app/yii migrate --interactive=0');
+
         $report = Reports::create();
         return $report->id;
     }
@@ -43,10 +44,11 @@ class ReportController extends Controller
 
         $sender = new Sender();
         foreach ($reports as $report) {
-            if ($sender->send($report->id)) {
+            if ($sender->sendReport($report->id)) {
                 $c++;
                 $report->sent = date("Y-m-d H:i:s", time());
                 $report->save();
+                $sender->nextCommand();
             }
         }
         return $c;

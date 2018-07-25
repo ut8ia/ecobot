@@ -2,8 +2,13 @@
 
 namespace common\services\sender;
 
-use common\services\sender\models\RequestModel;
-use common\services\sender\models\ResponseModel;
+use common\services\commander\Commander;
+use common\services\commander\models\Command;
+use common\services\sender\models\RequestCommand;
+use common\services\sender\models\RequestReport;
+use common\services\sender\models\ResponseCommand;
+use common\services\sender\models\ResponseCommon;
+use common\services\sender\models\ResponseReport;
 use yii\base\BaseObject;
 use Yii;
 
@@ -16,27 +21,57 @@ class Sender extends BaseObject
 
     private $body;
 
+    /**
+     * @var ResponseCommon $responseModel
+     */
+    private $responseModel;
+
     public function init()
     {
         $this->host = Yii::$app->params['apihost'];
         $this->key = Yii::$app->params['apikey'];
     }
 
-    public function send($reportId)
+    /**
+     * @return ResponseCommon
+     */
+    public function getResponse()
+    {
+        return $this->responseModel;
+    }
+
+    /**
+     * @param integer $reportId
+     * @return bool
+     */
+    public function sendReport($reportId)
     {
         $this->endpoint = 'v1/report';
 
-        $requestModel = new RequestModel();
+        $requestModel = new RequestReport();
         if (!$requestModel->prepare($reportId)) {
             return false;
         }
         $this->body = $requestModel->toJson();
+        $this->responseModel = new ResponseCommon();
         return $this->makeRequest();
     }
 
-    public function makeCallback()
+    /**
+     * @param Command $command
+     * @return bool
+     */
+    public function sendCommandResult(Command $command)
     {
+        $this->endpoint = 'v1/command';
 
+        $requestModel = new RequestCommand();
+        if (!$requestModel->prepare($command)) {
+            return false;
+        }
+        $this->body = $requestModel->toJson();
+        $this->responseModel = new ResponseCommon();
+        return $this->makeRequest();
     }
 
 
@@ -79,11 +114,24 @@ class Sender extends BaseObject
      */
     private function catchResponse($response)
     {
-        $responseModel = new ResponseModel();
-        $responseModel->load(['ResponseModel' => json_decode($response, true)]);
-        $responseModel->validate();
-        return $responseModel->isSuccess();
+        var_dump($response);
+        $this->responseModel->load(['Response' => json_decode($response, true)]);
+        return $this->responseModel->validate() && $this->responseModel->isSuccess();
     }
 
+
+    /**
+     *  run next command recursive execution
+     */
+    public function nextCommand()
+    {
+        $data = $this->responseModel->getResponseData();
+        $nextCommand = $data->getNextCommand();
+
+        if (null !== $nextCommand) {
+            // run recursive command execution
+            Commander::runRecursion($nextCommand);
+        }
+    }
 
 }

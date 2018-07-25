@@ -2,11 +2,11 @@
 
 namespace common\services\sender\models;
 
-use common\services\sender\models\data\ResponseDataModel;
+use common\services\sender\models\data\ResponseDataCommon;
 use Yii;
 use yii\base\Model;
 
-class ResponseModel extends Model
+ class ResponseCommon extends Model
 {
 
     public $data;
@@ -14,6 +14,14 @@ class ResponseModel extends Model
 
     private $dataModel;
 
+    public function formName()
+    {
+        return 'Response';
+    }
+
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -22,6 +30,34 @@ class ResponseModel extends Model
             ['hash', 'checkHash']
         ];
     }
+
+     /**
+      * @return ResponseDataCommon
+      */
+    public function getResponseData()
+    {
+        return $this->dataModel;
+    }
+
+
+     /**
+      * @return bool
+      */
+     public function validateData()
+     {
+         $this->dataModel = new ResponseDataCommon();
+         $this->dataModel->load(['ResponseDataCommon' => $this->data]);
+         return $this->dataModel->validate();
+     }
+
+     /**
+      * @return boolean
+      */
+     public function isSuccess()
+     {
+         return $this->dataModel->success;
+     }
+
 
     /**
      * @return bool
@@ -42,22 +78,5 @@ class ResponseModel extends Model
     }
 
 
-    /**
-     * @return bool
-     */
-    public function validateData()
-    {
-        $this->dataModel = new ResponseDataModel();
-        $this->dataModel->load(['ResponseDataModel' => $this->data]);
-        return $this->dataModel->validate();
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isSuccess()
-    {
-        return $this->dataModel->success;
-    }
 
 }

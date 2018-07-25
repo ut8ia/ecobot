@@ -2,11 +2,17 @@
 
 namespace common\services\sender\models;
 
-use common\services\sender\models\data\RequestDataModel;
+use common\services\sender\models\data\RequestCommandData;
 use Yii;
 use yii\base\Model;
 
-class RequestModel extends Model
+/**
+ * Class RequestCommand
+ * @package common\services\sender\models
+ * @property array $data;
+ * @property string $hash
+ */
+class RequestCommand extends Model
 {
 
     public $data;
@@ -19,7 +25,7 @@ class RequestModel extends Model
     public function prepare($reportId)
     {
 
-        $dataModel = new RequestDataModel();
+        $dataModel = new RequestCommandData();
         $dataModel->prepare($reportId);
         if (!$dataModel->validate()) {
             return false;

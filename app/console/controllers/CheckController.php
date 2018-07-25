@@ -5,8 +5,6 @@ namespace console\controllers;
 use common\models\Parameters;
 use Yii;
 use yii\console\Controller;
-use common\models\CertificatesOrders;
-use common\models\Reports;
 
 /**
  * @package console\controllers
