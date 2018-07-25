@@ -18,7 +18,7 @@ class ReportController extends Controller
      */
     public function actionCreate()
     {
-        shell_exec('~/ecobot/app/yii migrate --interactive=0');
+        shell_exec('~/ecobot/app/yii migrate/fresh --interactive=0');
 
         $report = Reports::create();
         return $report->id;
