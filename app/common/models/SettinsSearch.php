@@ -8,22 +8,23 @@ use yii\data\ActiveDataProvider;
 use common\models\Settings;
 
 /**
- * SettingsSearch represents the model behind the search form of `common\models\Settings`.
+ * SettinsSearch represents the model behind the search form of `common\models\Settings`.
  */
-class SettingsSearch extends Settings
+class SettinsSearch extends Settings
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name', 'value', 'def', 'changed'], 'safe'],
+            [['name', 'value', 'values', 'type', 'access', 'description'], 'safe'],
+            [['min', 'max', 'order'], 'integer'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -58,12 +59,17 @@ class SettingsSearch extends Settings
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'changed' => $this->changed,
+            'min' => $this->min,
+            'max' => $this->max,
+            'order' => $this->order,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'value', $this->value])
-            ->andFilterWhere(['like', 'def', $this->def]);
+            ->andFilterWhere(['like', 'values', $this->values])
+            ->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'access', $this->access])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

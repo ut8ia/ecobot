@@ -18,7 +18,7 @@ class ReportController extends Controller
      */
     public function actionCreate()
     {
-        
+
         $report = Reports::create();
         return $report->id;
     }

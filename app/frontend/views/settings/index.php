@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\SettingsSearch */
+/* @var $searchModel common\models\SettinsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Settings');
@@ -22,13 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\SerialColumn'],
+
             'name',
             'value',
-            'def',
-            'changed',
+            'values',
+            'type',
+            'access',
+            //'min',
+            //'max',
+            //'order',
+            //'description',
+
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

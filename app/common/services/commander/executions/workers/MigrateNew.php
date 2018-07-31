@@ -4,17 +4,17 @@
 namespace common\services\commander\executions\workers;
 
 /**
- * Class Unknown
+ * Class MigrateNew
  * @package common\services\commander\executions\workers
  */
-class Unknown extends WorkerAbstract
+class MigrateNew extends WorkerAbstract
 {
 
 
 
     public function run()
     {
-        $this->_result = 'unknown command';
+       $this->_result = shell_exec('~/ecobot/app/yii migrate --interactive=0');
     }
 
 }

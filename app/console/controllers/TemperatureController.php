@@ -52,8 +52,8 @@ class TemperatureController extends Controller
 
         }
 
-        $temperature = round((($temp / $c) * $mult), 0) + Yii::$app->params['tempCorrection'];
-        $humidity = round((($hum / $c) * $mult), 0) + Yii::$app->params['humidityCorrection'];
+        $temperature = round((($temp / $c) * $mult), 0) + Yii::$app->settings->tempCorrection;
+        $humidity = round((($hum / $c) * $mult), 0) + Yii::$app->settings->humidityCorrection;
 
         Parameters::addRecord(Parameters::TYPE_TEMPERATURE, $temperature);
         Parameters::addRecord(Parameters::TYPE_HUMIDITY, $humidity);

@@ -40,6 +40,10 @@ class Commander extends BaseObject
     /**
      * @param Command $command
      * @return Command|null|static
+     *
+     * we dont save duplicated comands.
+     * try to run previous stored with same uid
+     *
      */
     public static function checkDuplicate(Command $command)
     {
@@ -51,6 +55,9 @@ class Commander extends BaseObject
     }
 
 
+    /**
+     * @param Command $command
+     */
     public static function runRecursion(Command $command)
     {
         $exec = Commander::makeExec($command);

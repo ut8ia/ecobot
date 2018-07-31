@@ -4,11 +4,10 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Settings;
-use common\models\SettingsSearch;
+use common\models\SettinsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
  * SettingsController implements the CRUD actions for Settings model.
@@ -16,30 +15,17 @@ use yii\filters\AccessControl;
 class SettingsController extends Controller
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ]
         ];
     }
 
@@ -49,7 +35,7 @@ class SettingsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SettingsSearch();
+        $searchModel = new SettinsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -62,6 +48,7 @@ class SettingsController extends Controller
      * Displays a single Settings model.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -93,6 +80,7 @@ class SettingsController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
@@ -112,6 +100,7 @@ class SettingsController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
