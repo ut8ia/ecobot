@@ -4,7 +4,7 @@
 namespace common\services\commander\executions\workers;
 
 /**
- * Class MigrateNew
+ * Class MigrateFresh
  * @package common\services\commander\executions\workers
  */
 class MigrateFresh extends WorkerAbstract

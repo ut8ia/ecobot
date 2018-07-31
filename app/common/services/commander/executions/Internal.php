@@ -6,6 +6,7 @@ namespace common\services\commander\executions;
 use common\services\commander\executions\workers\ApplySettings;
 use common\services\commander\executions\workers\GetDeviceUid;
 use common\services\commander\executions\workers\GitPull;
+use common\services\commander\executions\workers\MigrateFresh;
 use common\services\commander\executions\workers\MigrateNew;
 use common\services\commander\executions\workers\Unknown;
 use common\services\commander\executions\workers\WorkerAbstract;
@@ -41,7 +42,7 @@ class Internal extends ExecutorAbstract
                 return new MigrateNew($this->command);
                 break;
             case self::MIGRATE_FRESH:
-                return new Migrate($this->command);
+                return new MigrateFresh($this->command);
                 break;
             case self::APPLY_SETTINGS:
                 return new ApplySettings($this->command);
