@@ -3,8 +3,6 @@
 namespace common\services\sender\models;
 
 use common\services\sender\models\data\RequestCommandData;
-use Yii;
-use yii\base\Model;
 
 /**
  * Class RequestCommand
@@ -12,11 +10,9 @@ use yii\base\Model;
  * @property array $data;
  * @property string $hash
  */
-class RequestCommand extends Model
+class RequestCommand extends RequestAbstract
 {
 
-    public $data;
-    public $hash;
 
     /**
      * @param $reportId
@@ -35,16 +31,5 @@ class RequestCommand extends Model
         return true;
     }
 
-    private function makeHash($data)
-    {
-        $this->hash = hash_hmac('md5', $data, Yii::$app->params['hashkey']);
-    }
 
-    /**
-     * @return string
-     */
-    public function toJson()
-    {
-        return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    }
 }

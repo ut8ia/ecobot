@@ -11,10 +11,10 @@ class GitPull extends WorkerAbstract
 {
 
 
-
     public function run()
     {
-       $this->_result = shell_exec('cd ~/ecobot ; git pull origin master');
+        $result = shell_exec('cd ~/ecobot ; git pull origin master');
+        $this->_result = (string)$result;
     }
 
 }

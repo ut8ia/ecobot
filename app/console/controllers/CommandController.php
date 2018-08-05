@@ -24,9 +24,10 @@ class CommandController extends Controller
 
         $exec = Commander::makeExec($c);
         $exec->run();
-       echo $exec->getResult();
-       echo $exec->sendResponse();
+        echo $exec->getResult();
+        echo $exec->sendResponse();
     }
+
 
 
 }

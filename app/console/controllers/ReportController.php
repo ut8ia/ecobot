@@ -47,8 +47,8 @@ class ReportController extends Controller
                 $c++;
                 $report->sent = date("Y-m-d H:i:s", time());
                 $report->save();
-                $sender->nextCommand();
             }
+            $sender->nextCommand();
         }
         return $c;
     }

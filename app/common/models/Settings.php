@@ -28,6 +28,8 @@ class Settings extends \yii\db\ActiveRecord
     const TYPE_BOOL = 'bool';
 
 
+    const SETTING_EXT_PERFORMER_NAMESPACE = 'extPerformerNamespace';
+
     /**
      * {@inheritdoc}
      */

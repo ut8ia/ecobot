@@ -5,6 +5,7 @@ namespace common\services\sender;
 use common\services\commander\Commander;
 use common\services\commander\models\Command;
 use common\services\sender\models\RequestCommand;
+use common\services\sender\models\RequestRegister;
 use common\services\sender\models\RequestReport;
 use common\services\sender\models\ResponseCommand;
 use common\services\sender\models\ResponseCommon;
@@ -28,8 +29,8 @@ class Sender extends BaseObject
 
     public function init()
     {
-        $this->host = Yii::$app->params['apihost'];
-        $this->key = Yii::$app->params['apikey'];
+        $this->host = Yii::$app->settings->apihost;
+        $this->key = Yii::$app->settings->apikey;
     }
 
     /**
@@ -75,11 +76,30 @@ class Sender extends BaseObject
     }
 
 
+
+    public function sendRegister()
+    {
+        $this->endpoint = 'v1/register';
+
+        $requestModel = new RequestRegister();
+        if (!$requestModel->prepare()) {
+            return false;
+        }
+        $this->body = $requestModel->toJson();
+        $this->responseModel = new ResponseCommon();
+        return $this->makeRequest();
+    }
+
+
+
     /**
      * @return bool
      */
     private function makeRequest()
     {
+        var_dump($this->endpoint);
+        var_dump($this->key);
+        var_dump($this->body);
 
         $headers = [
             'Content-Type: application/json',

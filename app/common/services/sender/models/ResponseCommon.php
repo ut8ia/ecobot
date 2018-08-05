@@ -67,7 +67,7 @@ use yii\base\Model;
         $computedHash = hash_hmac(
             'md5',
             json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            Yii::$app->params['hashkey']
+            Yii::$app->settings->hashkey
         );
 
         if ($this->hash === $computedHash) {

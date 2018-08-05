@@ -2,20 +2,20 @@
 
 namespace common\services\sender\models;
 
-use common\services\sender\models\data\RequestReportData;
+use common\services\sender\models\data\RequestRegisterData;
 
-class RequestReport extends RequestAbstract
+class RequestRegister extends RequestAbstract
 {
 
     /**
      * @param $reportId
      * @return bool
      */
-    public function prepare($reportId)
+    public function prepare($nullArgument = null)
     {
 
-        $dataModel = new RequestReportData();
-        $dataModel->prepare($reportId);
+        $dataModel = new RequestRegisterData();
+        $dataModel->prepare();
         if (!$dataModel->validate()) {
             return false;
         }
