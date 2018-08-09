@@ -17,7 +17,8 @@ class CommandController extends Controller
     public function actionRun($command)
     {
         $c = new Command();
-        $c->type = Command::TYPE_EVENT;
+//        $c->type = Command::TYPE_EVENT;
+        $c->type = Command::TYPE_INTERNAL;
         $c->command = $command;
         $c->received = date("Y-m-d H:i:s", time());
         $c->uid = Yii::$app->security->generateRandomString(32);

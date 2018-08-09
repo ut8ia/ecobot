@@ -5,6 +5,7 @@ namespace common\services\commander\executions;
 
 use common\services\commander\executions\workers\ApplySettings;
 use common\services\commander\executions\workers\GetDeviceUid;
+use common\services\commander\executions\workers\GetLocalIp;
 use common\services\commander\executions\workers\GitPull;
 use common\services\commander\executions\workers\MigrateFresh;
 use common\services\commander\executions\workers\MigrateNew;
@@ -19,6 +20,7 @@ class Internal extends ExecutorAbstract
     const MIGRATE_FRESH = 'MigrateFresh';
     const APPLY_SETTINGS = 'ApplySettings';
     const GIT_PULL = 'GitPull';
+    const GET_LOCAL_IP = 'GetLocalIp';
 
     public function run()
     {
@@ -49,6 +51,9 @@ class Internal extends ExecutorAbstract
                 break;
             case self::GIT_PULL:
                 return new GitPull($this->command);
+                break;
+            case self::GET_LOCAL_IP:
+                return new GetLocalIp($this->command);
                 break;
             default:
                 return new Unknown();
