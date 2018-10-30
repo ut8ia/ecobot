@@ -2,7 +2,6 @@
 
 namespace common\services\commander\executions;
 
-use common\services\commander\Commander;
 use common\services\commander\models\Command;
 use common\services\sender\Sender;
 use Yii;

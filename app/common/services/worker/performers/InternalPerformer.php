@@ -6,6 +6,10 @@ use common\services\worker\performers\internalAdapters\InternalAdapterAbstract;
 use common\services\worker\performers\internalAdapters\Unknown;
 use common\services\worker\performers\PerformerAbstract;
 
+/**
+ * Class InternalPerformer
+ * @package common\services\worker\performers
+ */
 class InternalPerformer extends PerformerAbstract
 {
 
