@@ -24,14 +24,12 @@ sudo mysql_secure_installation
 # UPDATE mysql.user SET plugin = 'mysql_native_password', Password = PASSWORD('NEWPASSWORD') WHERE User = 'root';
 # FLUSH PRIVILEGES;
 
-
 # DHT 22 sensor issues
 sudo apt-get install build-essential python-dev python-openssl
 cd ~
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 cd Adafruit_Python_DHT
 sudo python setup.py install
-
 
 
 # copy and setup gpio bootstrap script
