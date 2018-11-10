@@ -10,5 +10,5 @@ return [
     'humidityCorrection' => 0,
     'dust10Correction' => 1,
     'dust25Correction' => 1,
-    'version' => '1.13'
+    'version' => '1.14'
 ];
