@@ -19,7 +19,7 @@ class CheckController extends Controller
     {
         if (!Parameters::checkParameter(Parameters::TYPE_DUST25)) {
             Yii::error('reboot command due dust densor failures','DUST');
-            shell_exec('sudo shutdown -r now');
+          //  shell_exec('sudo shutdown -r now');
         }
     }
 
