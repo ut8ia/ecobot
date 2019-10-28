@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+
+  ecobot_nginx:
+    container_name: ecobot_nginx
+    image: nginx:latest
+    volumes:
+      - ../app:/app
+      - ${PWD}/.data/logs:/logs
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - internal
+    expose:
+      - 80
+
+  ecobot_phpfpm:
+    container_name: ecobot_phpfpm
+    build:
+      context: ./phpfpm
+      dockerfile: ./Dockerfile
+    volumes:
+      - ../app:/app
+      - ./app/environments:/app/environments
+    networks:
+      - internal
+
+  ecobot_db:
+    container_name: ecobot_db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: ecotower
+      MYSQL_USER: walker
+      MYSQL_PASSWORD: example
+    volumes:
+      - ${PWD}/.data/mysql:/var/lib/mysql
+    networks:
+      - internal
+    ports:
+      - 13306:3306
+
+networks:
+  internal:
+    name: ecobot_internal
+    driver: bridge

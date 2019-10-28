@@ -1,10 +1,7 @@
-# phpstorm project files
+# ide project files
 .idea
-
-# netbeans project files
 nbproject
-
-# zend studio for eclipse project files
+.DS_Store
 .buildpath
 .project
 .settings
@@ -13,18 +10,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-/vendor
+/app/vendor
 
-# composer itself is not needed
-composer.phar
-
-# Mac DS_Store Files
-.DS_Store
-
-# phpunit itself is not needed
-phpunit.phar
-# local phpunit config
-/phpunit.xml
-
-# vagrant runtime
-/.vagrant
+#runtime
+/docker/.runtime
